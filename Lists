@@ -1,0 +1,115 @@
+"""Assignment"""
+val fruit: List[String] = List("apples", "oranges", "pears") // List of strings
+val nums: List[Int] = List(1, 2, 3, 4) // List of int
+val diag3: List[List[Int]] = // List of lists
+  List(
+    List(1, 0, 0),
+    List(0, 1, 0),
+    List(0, 0, 1)
+  )
+val empty = List() // Empty List
+
+"""Empty Lists: are a subtype of List[T]"""
+val example: List[String] = List() // List() is also of type List[String]!
+
+"""Constructing blocks: lists by hand"""
+val alumnos = "Alan" :: ("Kro" :: ("Oswo" :: Nil)) // x1 :: x2 ==> x1 :: (x2 :: Nil)
+val numeritos = 4 :: (3 :: (2 :: (1 :: Nil)))
+
+"""Basic Operations"""
+fruit.isEmpty // Returns True or False
+// println(fruit.tail) // Returns List(oranges, pears) List[String]
+nums.tail.head // Returns the first element of the tail list
+diag3.head // Returns the first element
+
+def insert(x: Int, xs: List[Int]): List[Int] = // inserta un número menor antes de uno mas grande que el
+  if (xs.isEmpty || x <= xs.head) x :: xs
+  else xs.head :: insert(x, xs.tail)
+
+insert(3, numeritos)
+//numeritos=insert(5, numeritos)
+
+def isort(xs: List[Int]): List[Int] = // ordena la lista de forma ascendente
+  if (xs.isEmpty) Nil
+  else insert(xs.head, isort(xs.tail))
+
+isort(numeritos)
+
+"""List Patternns"""
+val List(a, b, c) = fruit // Asignarle a los elementos de la lista, los elementos de fruit
+a
+b
+c
+
+List(a, b, c)
+
+val d :: e :: rest = fruit // Dos primeros elementos de la lista + lista del resto
+
+d
+e
+rest
+
+"""First order methods"""
+
+// List concatenation ':::'
+List(1, 2) ::: List(3, 4, 5) // Agrega los elementos de la segunda lista a la derecha de la primera
+
+// List append
+def append[T](xs: List[T], ys: List[T]): List[T] = // Otra manera de concatenar
+  xs match {
+    case List()   => ys
+    case x :: xs1 => x :: append(xs1, ys)
+  }
+
+append(alumnos, fruit)
+
+// List length
+alumnos.length
+numeritos.length
+
+// init and last
+nums.init // Returns a list without the last element
+nums.last // Returns the last element
+
+// List reverse
+nums.reverse
+
+// xs.reverse.init equals xs.tail.reverse and viceversa
+nums.reverse.init
+nums.tail.reverse
+
+// xs.reverse.head equals xs.last and viceversa
+nums.reverse.head
+nums.last
+
+// take
+nums take 2
+
+// drop
+nums drop 2
+
+// splitAt
+nums splitAt 2 // xs splitAt n equals (xs take n, xs drop n)
+
+// apply
+nums apply 3
+
+// indices
+nums.indices
+
+// flatten
+List(List(1, 2), List(3), List(), List(4, 5)).flatten
+fruit.map(_.toCharArray).flatten
+
+// zip: The zip operation takes two lists and forms a list of pairs
+val zipped = alumnos.indices zip alumnos
+zipped
+alumnos.zipWithIndex
+
+// unzip
+zipped.unzip
+
+fruit.toString
+fruit
+
+fruit.mkString("[", ",", "]")
